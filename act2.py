@@ -5,6 +5,19 @@ from freegames import square, vector
 food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
+colors = ["green", "black", "blue", "pink", "cyan"]
+   
+def color():
+    "Return a random color"
+    return colors[randrange(len(colors))]
+
+def reviewColor():
+    "Make sure that snake and food have different color"
+    snakeColor = color()
+    foodColor = color()
+    while snakeColor == foodColor:
+        foodColor = color()
+    return snakeColor, foodColor
 
 def change(x, y):
     "Change snake direction."
@@ -37,15 +50,16 @@ def move():
     clear()
 
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, snakeColor)
 
-    square(food.x, food.y, 9, 'green')
+    square(food.x, food.y, 9, foodColor)
     update()
     ontimer(move, 100)
 
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
+snakeColor, foodColor = reviewColor()
 listen()
 onkey(lambda: change(10, 0), 'Right')
 onkey(lambda: change(-10, 0), 'Left')
