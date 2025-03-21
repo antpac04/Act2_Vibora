@@ -37,12 +37,25 @@ def inside(head):
     "Return True if head inside boundaries."
     return -200 < head.x < 190 and -200 < head.y < 190
 
+def turn(head):
+    "Allows the snake to turn around the edges"
+    if head.x > 190:
+        head.x = -190
+    elif head.x < -190:
+        head.x = 90
+    if head.y > 190:
+        head.y = -190
+    elif head.y < -190:
+        head.y = 190
+
 def move():
     "Move snake forward one segment."
     head = snake[-1].copy()
     head.move(aim)
 
-    if not inside(head) or head in snake:
+    turn(head)
+
+    if head in snake:
         square(head.x, head.y, 9, 'red')
         update()
         return
