@@ -19,6 +19,15 @@ def reviewColor():
         foodColor = color()
     return snakeColor, foodColor
 
+def move_food():
+    "Move food one step randomly."
+    directions = [vector(10, 0), vector(-10, 0), vector(0, 10), vector(0, -10)]
+    move_direction = directions[randrange(len(directions))]
+
+    new_food = food + move_direction
+    if inside(new_food):  # Verifica que la comida no salga de los límites
+        food.move(move_direction)
+
 def change(x, y):
     "Change snake direction."
     aim.x = x
@@ -53,6 +62,7 @@ def move():
         square(body.x, body.y, 9, snakeColor)
 
     square(food.x, food.y, 9, foodColor)
+    move_food() #Llamar a la función para mover la comida aleatoriamente un paso a la vez.
     update()
     ontimer(move, 100)
 
